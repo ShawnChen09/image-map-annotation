@@ -15,7 +15,7 @@ What the notebook does:
 
 ## Examples
 
-The figures come from running the notebook's workflow, with each "click" simulated by the image's true class. Each shows the map before labeling and after three rounds. Gray dots: unlabeled; colored dots: labeled; contours: true classes; accuracy: the share of unlabeled images the classifier predicts correctly.
+The following figures come from running the notebook's workflow. Each shows the map before labeling and after three stages of labeling. Gray dots: unlabeled; colored dots: labeled; contours: true classes; accuracy: the share of unlabeled images the classifier predicts correctly.
 
 ### MNIST, raw pixels
 
@@ -27,7 +27,7 @@ The notebook's built-in example: 1,500 handwritten digits (150 per digit), descr
 
 1,500 EuroSAT satellite tiles (10 land-cover classes, 150 each), with two kinds of features.
 
-With embeddings from the DINOv2-small vision model, the map is structured before any labeling. With 6% of the images labeled, 86% of the rest are predicted correctly; at 42%, the classes form separate groups and 99% are correct.
+With embeddings from the DINOv2-small vision model, the map is structured before any labeling. Prediction accuracy increases as more of the images are labeled.
 
 ![EuroSAT with DINOv2 embeddings: before labeling and after rounds 1, 3 and 26](img/eurosat_dinov2.png)
 
