@@ -10,3 +10,36 @@ What the notebook does:
 1. Builds a 2D map of the embeddings, where similar images sit together.
 2. Asks you to label a well-spread set of images by clicking, one per grid cell on the map.
 3. Predicts labels for the rest, and points the next round at the images it is least sure about.
+
+**TLDR.** Each image's feature vector is projected to 2D with UMAP. A grid is laid over the map and you label one image per grid cell, so every region of the collection gets labels, including rare-looking images that a random sample would miss. A linear classifier trained on your labels predicts the rest; from the second round on, each grid cell offers the image the classifier is least sure about. After each round the map is recomputed from your labels only (semi-supervised UMAP). You stop when the predictions look right.
+
+## Usage
+
+### Input
+
+- A folder of images (`IMAGE_DIR`).
+- A DataFrame `images_df` with one row per image:
+
+| column | content |
+|---|---|
+| `image` | file name inside `IMAGE_DIR` |
+| `features` | a 1D array per image, all the same length |
+| other columns | kept as metadata; any of them can color the first map (`COLOR_BY`) |
+
+### Run the notebook
+
+Run the cells from top to bottom, then repeat steps 2b to 2d until the predictions look right.
+
+### Output
+
+Written to `OUTPUT_DIR`:
+
+- `labels.csv`: `image, label` for every image you labeled. Saved on every click.
+- `predictions.csv`: `image, label, predicted, confidence` for every image. `confidence` is the classifier's probability for the predicted class (1.0 for images you labeled).
+
+## Resources
+
+- jupyter-scatter: [documentation](https://jupyter-scatter.dev)
+- ipywidgets: [documentation](https://ipywidgets.readthedocs.io)
+- UMAP: [umap-learn documentation](https://umap-learn.readthedocs.io), [semi-supervised UMAP](https://umap-learn.readthedocs.io/en/latest/supervised.html)
+- Widgets on Colab: [custom widget support](https://colab.research.google.com/notebooks/widgets.ipynb)
