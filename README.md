@@ -13,6 +13,30 @@ What the notebook does:
 
 **TLDR.** Each image's feature vector is projected to 2D with UMAP. A grid is laid over the map and you label one image per grid cell, so every region of the collection gets labels, including rare-looking images that a random sample would miss. A linear classifier trained on your labels predicts the rest; from the second round on, each grid cell offers the image the classifier is least sure about. After each round the map is recomputed from your labels only (semi-supervised UMAP). You stop when the predictions look right.
 
+## Examples
+
+The figures come from running the notebook's workflow, with each "click" simulated by the image's true class. Each shows the map before labeling and after three rounds. Gray dots: unlabeled; colored dots: labeled; contours: true classes; accuracy: the share of unlabeled images the classifier predicts correctly.
+
+### MNIST, raw pixels
+
+The notebook's built-in example: 1,500 handwritten digits (150 per digit), described by their grayscale pixel intensities. As labels accumulate, the digits separate on the map.
+
+![MNIST: before labeling and after rounds 1, 3 and 20](img/mnist_pixels.png)
+
+### EuroSAT satellite images: the features matter
+
+1,500 EuroSAT satellite tiles (10 land-cover classes, 150 each), with two kinds of features.
+
+With embeddings from the DINOv2-small vision model, the map is structured before any labeling. With 6% of the images labeled, 86% of the rest are predicted correctly; at 42%, the classes form separate groups and 99% are correct.
+
+![EuroSAT with DINOv2 embeddings: before labeling and after rounds 1, 3 and 26](img/eurosat_dinov2.png)
+
+With raw pixels, the same images form a thin band ordered by brightness, and only Sea and Forest separate. More labels barely help: predictions stay close to chance.
+
+![EuroSAT with raw pixels: before labeling and after rounds 1, 3 and 26](img/eurosat_pixels.png)
+
+Class names: Res = Residential, Ind = Industrial, Hwy = Highway, Crop = Annual crop, PCrop = Permanent crop, Past = Pasture, Herb = Herbaceous vegetation.
+
 ## Usage
 
 ### Input
@@ -43,3 +67,6 @@ Written to `OUTPUT_DIR`:
 - ipywidgets: [documentation](https://ipywidgets.readthedocs.io)
 - UMAP: [umap-learn documentation](https://umap-learn.readthedocs.io), [semi-supervised UMAP](https://umap-learn.readthedocs.io/en/latest/supervised.html)
 - Widgets on Colab: [custom widget support](https://colab.research.google.com/notebooks/widgets.ipynb)
+- MNIST: LeCun, Cortes & Burges, [dataset page](http://yann.lecun.com/exdb/mnist/)
+- EuroSAT: Helber et al., [EuroSAT RGB on Zenodo](https://zenodo.org/records/7711810)
+- DINOv2: Oquab et al., [facebook/dinov2-small](https://huggingface.co/facebook/dinov2-small)
