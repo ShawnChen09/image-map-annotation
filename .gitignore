@@ -1,0 +1,12 @@
+# Created when you run the notebook
+example_data/
+outputs/
+
+# Local environments and caches
+.venv/
+.ipynb_checkpoints/
+__pycache__/
+.DS_Store
+
+# Local data
+okinawa_5sites/
