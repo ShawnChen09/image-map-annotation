@@ -8,10 +8,8 @@ Use it when you have images and their embeddings (CLIP, DINOv2, ResNet or plain 
 
 What the notebook does:
 1. Builds a 2D map of the embeddings, where similar images sit together.
-2. Asks you to label a well-spread set of images by clicking, one per grid cell on the map.
+2. Asks you to label a well-spread set of images by clicking.
 3. Predicts labels for the rest, and points the next round at the images it is least sure about.
-
-**TLDR.** Each image's feature vector is projected to 2D with UMAP. A grid is laid over the map and you label one image per grid cell, so every region of the collection gets labels, including rare-looking images that a random sample would miss. A linear classifier trained on your labels predicts the rest; from the second round on, each grid cell offers the image the classifier is least sure about. After each round the map is recomputed from your labels only (semi-supervised UMAP). You stop when the predictions look right.
 
 ## Examples
 
@@ -41,7 +39,7 @@ Class names: Res = Residential, Ind = Industrial, Hwy = Highway, Crop = Annual c
 
 ### Input
 
-- A folder of images (`IMAGE_DIR`).
+- A folder path of images (`IMAGE_DIR`).
 - A DataFrame `images_df` with one row per image:
 
 | column | content |
@@ -54,6 +52,8 @@ Class names: Res = Residential, Ind = Industrial, Hwy = Highway, Crop = Annual c
 
 Run the cells from top to bottom, then repeat steps 2b to 2d until the predictions look right.
 
+**TLDR.** Each image's feature vector is projected to 2D with UMAP. A grid is laid over the map and you label one image per grid cell, so every region of the collection gets labels, including rare-looking images that a random sample would miss. A linear classifier trained on your labels predicts the rest; from the second round on, each grid cell offers the image the classifier is least sure about. After each round the map is recomputed from your labels only (semi-supervised UMAP). You stop when the predictions look right.
+
 ### Output
 
 Written to `OUTPUT_DIR`:
@@ -63,10 +63,10 @@ Written to `OUTPUT_DIR`:
 
 ## Resources
 
-- jupyter-scatter: [documentation](https://jupyter-scatter.dev)
-- ipywidgets: [documentation](https://ipywidgets.readthedocs.io)
-- UMAP: [umap-learn documentation](https://umap-learn.readthedocs.io), [semi-supervised UMAP](https://umap-learn.readthedocs.io/en/latest/supervised.html)
-- Widgets on Colab: [custom widget support](https://colab.research.google.com/notebooks/widgets.ipynb)
+- jupyter-scatter: Lekschas, [documentation](https://jupyter-scatter.dev)
+- ipywidgets: Project Jupyter, [documentation](https://ipywidgets.readthedocs.io)
+- Widgets on Colab: Google, [guide](https://colab.research.google.com/notebooks/widgets.ipynb)
+- UMAP: McInnes, Healy & Melville, [documentation](https://umap-learn.readthedocs.io), [semi-supervised guide](https://umap-learn.readthedocs.io/en/latest/supervised.html)
 - MNIST: LeCun, Cortes & Burges, [dataset page](http://yann.lecun.com/exdb/mnist/)
-- EuroSAT: Helber et al., [EuroSAT RGB on Zenodo](https://zenodo.org/records/7711810)
-- DINOv2: Oquab et al., [facebook/dinov2-small](https://huggingface.co/facebook/dinov2-small)
+- EuroSAT: Helber et al., [dataset page](https://zenodo.org/records/7711810)
+- DINOv2: Oquab et al., [model page](https://huggingface.co/facebook/dinov2-small)
